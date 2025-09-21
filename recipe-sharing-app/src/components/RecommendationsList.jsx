@@ -13,8 +13,17 @@ const useRecipeStore = create(set => ({
     const recommended = state.recipes.filter(recipe =>
       state.favorites.includes(recipe.id) && Math.random() > 0.5
     );
-    return { recommendations: recommended };
+    return (
+      <div>
+        <h2>My favorites</h2>
+        {favorites.map(recipe =>
+        (
+          <div key={recipe.id}>
+            <h3>{recipe.title}</h3>
+          </div>
+      </div>;
   }),
 
 }));
 export default RecommendationsList;
+
