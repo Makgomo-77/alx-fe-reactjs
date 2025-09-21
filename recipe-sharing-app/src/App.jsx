@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, {useEffect} from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import RecipeList from './RecipeList';
@@ -65,6 +66,7 @@ const App = () => {
   }, [fetchRecipes]);
 
   return (
+<router>
     <div>
       <h1>Recipe Sharing App</h1>
       <SearchBar />
@@ -74,6 +76,7 @@ const App = () => {
         <Route path="/recipe/:id" element={<RecipeDetail />} />
       </Routes>
     </div>
+</router>
   );
 };
 
