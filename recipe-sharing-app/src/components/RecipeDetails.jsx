@@ -14,3 +14,5 @@
       </div>
     );
   };
+
+export default RecipeDetails;
