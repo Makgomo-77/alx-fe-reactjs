@@ -15,4 +15,6 @@ const useRecipeStore = create(set => ({
     );
     return { recommendations: recommended };
   }),
+
 }));
+export default RecommendationsList;
