@@ -11,6 +11,7 @@ function UserProfile() {
         Developer at Example Co. Loves to write code and explore new technologies.
       </p>
     </div>
+
   );
 }
 
