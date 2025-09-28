@@ -32,7 +32,6 @@ const Search = () => {
 
   const handleInputChange = (e) => {
     setUsername(e.target.value);
-    // Clear error when user starts typing
     if (error) setError(null);
   };
 
@@ -43,47 +42,36 @@ const Search = () => {
           <label htmlFor="username">
             Search GitHub Users
           </label>
-          <div>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={handleInputChange}
-              placeholder="Enter GitHub username..."
-              disabled={loading}
-            />
-            <button
-              type="submit"
-              disabled={loading || !username.trim()}
-            >
-              Search
-            </button>
-          </div>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={handleInputChange}
+            placeholder="Enter GitHub username..."
+            disabled={loading}
+          />
+          <button
+            type="submit"
+            disabled={loading || !username.trim()}
+          >
+            Search
+          </button>
         </div>
       </form>
 
-      {/* Loading State */}
       {loading && (
         <div>
-          <div>Loading...</div>
           <p>Loading...</p>
         </div>
       )}
 
-      {/* Error State */}
       {error && (
         <div>
-          <div>
-            <svg viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
-            </svg>
-          </div>
           <p>Looks like we can't find the user</p>
           <p>{error}</p>
         </div>
       )}
 
-      {/* User Data Display */}
       {userData && (
         <div>
           <div>
@@ -92,9 +80,7 @@ const Search = () => {
               alt={`${userData.login}'s avatar`}
             />
             <div>
-              <h2>
-                {userData.name || userData.login}
-              </h2>
+              <h2>{userData.name || userData.login}</h2>
               <p>@{userData.login}</p>
             </div>
           </div>
@@ -104,60 +90,18 @@ const Search = () => {
           )}
           
           <div>
-            <div>
-              <p>{userData.public_repos}</p>
-              <p>Repositories</p>
-            </div>
-            <div>
-              <p>{userData.followers}</p>
-              <p>Followers</p>
-            </div>
-            <div>
-              <p>{userData.following}</p>
-              <p>Following</p>
-            </div>
-            <div>
-              <p>
-                {userData.public_gists}
-              </p>
-              <p>Gists</p>
-            </div>
+            <p>Repositories: {userData.public_repos}</p>
+            <p>Followers: {userData.followers}</p>
+            <p>Following: {userData.following}</p>
           </div>
 
-          <div>
-            {userData.location && (
-              <p>
-                <span>Location:</span> {userData.location}
-              </p>
-            )}
-            {userData.company && (
-              <p>
-                <span>Company:</span> {userData.company}
-              </p>
-            )}
-            {userData.blog && (
-              <p>
-                <span>Blog:</span>{' '}
-                <a href={userData.blog} target="_blank" rel="noopener noreferrer">
-                  {userData.blog}
-                </a>
-              </p>
-            )}
-            <p>
-              <span>Joined:</span>{' '}
-              {new Date(userData.created_at).toLocaleDateString()}
-            </p>
-          </div>
-
-          <div>
-            <a
-              href={userData.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View GitHub Profile
-            </a>
-          </div>
+          <a
+            href={userData.html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View GitHub Profile
+          </a>
         </div>
       )}
     </div>
