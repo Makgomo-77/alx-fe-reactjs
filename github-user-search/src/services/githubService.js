@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class GitHubService {
   constructor() {
-    this.baseURL = 'https://api.github.com/search/users?';
+    this.baseURL = 'https://api.github.com/search/users?q';
     this.perPage = 30;
   }
 
