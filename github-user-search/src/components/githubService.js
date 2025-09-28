@@ -4,7 +4,7 @@ import axios from 'axios';
 
 class GitHubService {
   constructor() {
-    this.baseURL = 'https://api.github.com';
+    this.baseURL = 'https://api.github.com/search/users';
     this.perPage = 30;
   }
 
@@ -41,7 +41,7 @@ class GitHubService {
 
   // Enhanced API integration with location and minRepos support
   async advancedSearchUsers(params) {
-    const { query, sort, order, page, location, minRepos, language, followers } = params;
+    const {location, minRepos,} = params;
     
     if (!query || query === 'type:user') {
       throw new Error('Please provide search criteria');
