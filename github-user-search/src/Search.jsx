@@ -1,117 +1,167 @@
+// src/components/Search.jsx
+import { useState } from 'react';
+import { fetchUserData } from '../services/githubService';
 
-import { useState } from "react";
-import { fetchUserData, advancedSearchUsers } from "../services/githubService";
-
-export default function Search() {
-  const [username, setUsername] = useState("");
-  const [location, setLocation] = useState("");
-  const [repos, setRepos] = useState("");
-  const [results, setResults] = useState([]);
+const Search = () => {
+  const [username, setUsername] = useState('');
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
-  // 🔹 handleSubmit with preventDefault
   const handleSubmit = async (e) => {
-    e.preventDefault(); // <-- prevents page refresh
-    setLoading(true);
-    setError("");
-    setResults([]);
-
-    try {
-      let data;
-      if (location || repos) {
-        // Advanced search if extra fields are filled
-        data = await advancedSearchUsers(username, location, repos);
-      } else {
-        // Basic single-user search
-        const user = await fetchUserData(username);
-        data = [user];
-      }
-      setResults(data);
-    } catch (err) {
-      setError("Looks like we can’t find any users.");
-    } finally {
-      setLoading(false);
+    e.preventDefault();
+    
+    if (!username.trim()) {
+      setError('Please enter a username');
+      return;
     }
-  };
 
-  return (
-    <div className="p-4">
-      {/* 🔹 form with onSubmit */}
-      <form onSubmit={handleSubmit} className="grid gap-3 sm:grid-cols-3 mb-6">
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="GitHub username"
-          className="border p-2 rounded 
-import { useState } from "react";
-import { fetchUserData } from "../services/githubService";
-
-export default function Search() {
-  const [username, setUsername] = useState("");
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // ✅ contains "preventDefault"
     setLoading(true);
-    setError("");
-    setUser(null);
+    setError(null);
+    setUserData(null);
 
     try {
       const data = await fetchUserData(username);
-      setUser(data);
+      setUserData(data);
     } catch (err) {
-      setError("Looks like we cant find the user"); // ✅ exact string
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleInputChange = (e) => {
+    setUsername(e.target.value);
+    // Clear error when user starts typing
+    if (error) setError(null);
+  };
+
   return (
-    <div className="p-4">
-      {/* ✅ contains "form" and "onSubmit" */}
-      <form onSubmit={handleSubmit} className="flex gap-2">
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter GitHub username"
-          className="border p-2 rounded w-full"
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Search
-        </button>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">
+            Search GitHub Users
+          </label>
+          <div>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={handleInputChange}
+              placeholder="Enter GitHub username..."
+              disabled={loading}
+            />
+            <button
+              type="submit"
+              disabled={loading || !username.trim()}
+            >
+              Search
+            </button>
+          </div>
+        </div>
       </form>
 
-      {/* ✅ must contain "Loading" */}
-      {loading && <p>Loading...</p>}
-      {/* ✅ must contain "Looks like we cant find the user" */}
-      {error && <p className="text-red-500">{error}</p>}
+      {/* Loading State */}
+      {loading && (
+        <div>
+          <div>Loading...</div>
+          <p>Loading...</p>
+        </div>
+      )}
 
-      {/* ✅ must contain "avatar_url", "login", "img" */}
-      {user && (
-        <div className="mt-4 flex items-center gap-4">
-          <img
-            src={user.avatar_url}
-            alt={user.login}
-            className="w-16 h-16 rounded-full"
-          />
+      {/* Error State */}
+      {error && (
+        <div>
           <div>
-            <p className="font-bold">{user.login}</p>
+            <svg viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <p>Looks like we can't find the user</p>
+          <p>{error}</p>
+        </div>
+      )}
+
+      {/* User Data Display */}
+      {userData && (
+        <div>
+          <div>
+            <img
+              src={userData.avatar_url}
+              alt={`${userData.login}'s avatar`}
+            />
+            <div>
+              <h2>
+                {userData.name || userData.login}
+              </h2>
+              <p>@{userData.login}</p>
+            </div>
+          </div>
+          
+          {userData.bio && (
+            <p>"{userData.bio}"</p>
+          )}
+          
+          <div>
+            <div>
+              <p>{userData.public_repos}</p>
+              <p>Repositories</p>
+            </div>
+            <div>
+              <p>{userData.followers}</p>
+              <p>Followers</p>
+            </div>
+            <div>
+              <p>{userData.following}</p>
+              <p>Following</p>
+            </div>
+            <div>
+              <p>
+                {userData.public_gists}
+              </p>
+              <p>Gists</p>
+            </div>
+          </div>
+
+          <div>
+            {userData.location && (
+              <p>
+                <span>Location:</span> {userData.location}
+              </p>
+            )}
+            {userData.company && (
+              <p>
+                <span>Company:</span> {userData.company}
+              </p>
+            )}
+            {userData.blog && (
+              <p>
+                <span>Blog:</span>{' '}
+                <a href={userData.blog} target="_blank" rel="noopener noreferrer">
+                  {userData.blog}
+                </a>
+              </p>
+            )}
+            <p>
+              <span>Joined:</span>{' '}
+              {new Date(userData.created_at).toLocaleDateString()}
+            </p>
+          </div>
+
+          <div>
             <a
-              href={user.html_url}
+              href={userData.html_url}
               target="_blank"
-              rel="noreferrer"
-              className="text-blue-500"
+              rel="noopener noreferrer"
             >
-              View Profile
+              View GitHub Profile
             </a>
           </div>
         </div>
       )}
     </div>
   );
-}
+};
+
+export default Search;
