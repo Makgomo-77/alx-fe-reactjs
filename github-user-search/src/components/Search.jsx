@@ -138,6 +138,19 @@ const Search = () => {
         </div>
       )}
     </div>
+  const buildQueryString = () => {
+    const { username, location, minRepos, language, followers } = searchParams;
+    let query = '';
+    
+    if (username) query += `${username} in:login`;
+    if (location) query += ` location:"${location}"`;
+    if (minRepos) query += ` repos:>${minRepos}`;
+    if (language) query += ` language:${language}`;
+    if (followers) query += ` followers:>${followers}`;
+    
+    return query.trim() || 'type:user';
+  };
+
  {/* Advanced Search Fields using map */}
         {showAdvanced && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
