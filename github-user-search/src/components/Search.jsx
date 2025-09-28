@@ -85,7 +85,7 @@ const Search = () => {
       {/* Error State */}
       {error && (
         <div>
-          <p>Looks like we can't find the user</p>
+          <p>Looks like we cant find the user</p>
           <p>{error}</p>
         </div>
       )}
