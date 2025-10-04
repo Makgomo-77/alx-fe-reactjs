@@ -57,7 +57,7 @@ const HomePage = () => {
       {/* Empty State */}
       {recipes.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No recipes found. Be the first to add one!</p>
+          <p className="text-gray-500 text-sm">No recipes found. Be the first to add one!</p>
         </div>
       )}
     </div>
