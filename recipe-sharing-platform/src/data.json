@@ -1,1 +1,27 @@
 
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+    "image": "https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop",
+    "ingredients": ["Spaghetti", "Eggs", "Parmesan Cheese", "Bacon", "Black Pepper", "Salt"],
+    "instructions": ["Cook spaghetti al dente", "Fry bacon until crispy", "Mix eggs and cheese", "Combine all ingredients while hot", "Season with black pepper"]
+  },
+  {
+    "id": 2,
+    "title": "Chicken Tikka Masala",
+    "summary": "Chunks of grilled chicken cooked in a smooth buttery & creamy tomato based gravy.",
+    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop",
+    "ingredients": ["Chicken Breast", "Yogurt", "Tomato Sauce", "Cream", "Spices", "Butter"],
+    "instructions": ["Marinate chicken in yogurt and spices", "Grill chicken pieces", "Prepare tomato and cream sauce", "Combine chicken with sauce", "Simmer for 10 minutes"]
+  },
+  {
+    "id": 3,
+    "title": "Chocolate Chip Cookies",
+    "summary": "Classic soft and chewy chocolate chip cookies that everyone loves.",
+    "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop",
+    "ingredients": ["Flour", "Butter", "Brown Sugar", "Chocolate Chips", "Eggs", "Vanilla", "Baking Soda"],
+    "instructions": ["Cream butter and sugars", "Add eggs and vanilla", "Mix in dry ingredients", "Fold in chocolate chips", "Bake at 350°F for 10-12 minutes"]
+  }
+]
